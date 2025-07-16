@@ -11,12 +11,11 @@ export async function GET(request) {
         title,
         "description": description[0].children[0].text,
         "imageUrl": media.secure_url,
-        "ctaText": promoCTA.text,
+        "ctaText": coalesce(promoCTA.text, "RSVP"), // fallback if missing
         "ctaLink": promoCTA.url,
         startDate,
         endDate
       }`);
-  
     const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`;
   
     const res = await fetch(url, {
