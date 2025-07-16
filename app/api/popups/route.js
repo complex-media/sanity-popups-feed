@@ -7,14 +7,15 @@ export async function GET(request) {
     } = process.env;
   
     const query = encodeURIComponent(`*[_type == "popUpEvent"]{
-      _id,
-      title,
-      "description": description[0].children[0].text,
-      "imageUrl": image.asset->url,
-      cta,
-      startTime,
-      endTime
-    }`);
+        _id,
+        title,
+        "description": description[0].children[0].text,
+        "imageUrl": media.secure_url,
+        "ctaText": promoCTA.text,
+        "ctaLink": promoCTA.url,
+        startDate,
+        endDate
+      }`);
   
     const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`;
   
