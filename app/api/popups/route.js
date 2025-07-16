@@ -7,32 +7,25 @@ export async function GET() {
     } = process.env
   
     const query = encodeURIComponent(`*[_type == "popUpEvent"]{
-        _id,
-        title,
-        "description": description[0].children[0].text,
-        "imageUrl": image.asset->url,
-        cta,
-        startTime,
-        endTime
-      }`)
+      _id,
+      title,
+      "description": description[0].children[0].text,
+      "imageUrl": image.asset->url,
+      cta,
+      startTime,
+      endTime
+    }`)
+  
     const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`
   
-    try {
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${SANITY_TOKEN}`
-        },
-        cache: 'no-store'
-      })
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${SANITY_TOKEN}`
+      },
+      cache: 'no-store'
+    })
   
-      const { result } = await res.json()
-  
-      return Response.json(result)
-    } catch (err) {
-      return new Response(
-        JSON.stringify({ error: 'Sanity fetch failed', message: err.message }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      )
-    }
+    const { result } = await res.json()
+    return Response.json(result)
   }
   
