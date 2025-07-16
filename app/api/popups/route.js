@@ -4,7 +4,7 @@ export async function GET() {
       SANITY_DATASET,
       SANITY_API_VERSION,
       SANITY_TOKEN
-    } = process.env
+    } = process.env;
   
     const query = encodeURIComponent(`*[_type == "popUpEvent"]{
       _id,
@@ -14,18 +14,18 @@ export async function GET() {
       cta,
       startTime,
       endTime
-    }`)
+    }`);
   
-    const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`
+    const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`;
   
     const res = await fetch(url, {
       headers: {
         Authorization: `Bearer ${SANITY_TOKEN}`
       },
       cache: 'no-store'
-    })
+    });
   
-    const { result } = await res.json()
-    return Response.json(result)
+    const { result } = await res.json();
+    return Response.json(result);
   }
   
