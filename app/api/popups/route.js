@@ -1,4 +1,4 @@
-export async function GET() {
+export async function GET(request) {
     const {
       SANITY_PROJECT_ID,
       SANITY_DATASET,
@@ -26,6 +26,15 @@ export async function GET() {
     });
   
     const { result } = await res.json();
-    return Response.json(result);
+  
+    return new Response(JSON.stringify(result), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // or restrict to 'https://lovable.app'
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
+    });
   }
   
